@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Future;
 
-public class TccTest {
+public class NativeOCIwithTCCTest {
     private static final Future<String> IMAGE_FUTURE = new LazyFuture<>() {
         @Override
         protected String resolve() {
@@ -29,7 +29,7 @@ public class TccTest {
 
             // Make it unique per folder (for caching)
             var imageName = String.format(
-                    "local/app-%s:%s",
+                    "local/demo-native-%s:%s",
                     DigestUtils.md5DigestAsHex(cwd.getAbsolutePath().getBytes()),
                     System.currentTimeMillis()
             );
@@ -45,9 +45,8 @@ public class TccTest {
                     .setMavenExecutable(new File(cwd, "mvnw"))
                     .setProfiles(List.of("native"))
                     .setProperties(properties);
-
-
-            InvocationResult invocationResult = null;
+            
+            InvocationResult invocationResult;
             try {
                 invocationResult = new DefaultInvoker().execute(request);
             } catch (MavenInvocationException e) {
@@ -67,7 +66,7 @@ public class TccTest {
             .withExposedPorts(8080);
 
     @Test
-    void letsGo() throws Exception {
+    void containerStartupTest() {
         APP.start();
     }
 }
