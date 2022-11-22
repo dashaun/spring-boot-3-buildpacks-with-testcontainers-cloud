@@ -11,4 +11,5 @@ git clone https://github.com/dashaun/spring-boot-3-buildpacks-with-testcontainer
 cd spring-boot-3-buildpacks-with-testcontainers-cloud
 docker context use tcc
 ./mvnw test
+docker images | grep local
 ```
